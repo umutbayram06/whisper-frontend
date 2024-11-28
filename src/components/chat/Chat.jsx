@@ -14,20 +14,15 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 
-/*const socket = io("http://localhost:5000", {
-  extraHeaders: {
-    Authorization: localStorage.getItem("authToken"),
-  },
-}); // Your server URL
-*/
-
 const token = localStorage.getItem("authToken").split(" ")[1];
 const decodedToken = jwtDecode(token);
 
 function Chat() {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
+  const [messages, setMessages] = useState([]);
   const toast = useRef(null);
+  const [socket, setSocket] = useState(null);
 
   useEffect(() => {
     const getUserRooms = async function () {
@@ -52,11 +47,49 @@ function Chat() {
         console.log(error);
       }
     };
-
     getUserRooms();
 
-    //socket.emit("initialize");
+    const socket = io("http://localhost:5000", {
+      extraHeaders: {
+        Authorization: localStorage.getItem("authToken"),
+      },
+    });
+    setSocket(socket);
+
+    const onReceiveMessage = ({ message: newMessage }) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    };
+
+    socket.on("receive-message", onReceiveMessage);
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
+
+  useEffect(() => {
+    const fetchRoomMessages = async () => {
+      if (selectedRoom != null) {
+        try {
+          const response = await axios.get(
+            `http://localhost:5000/rooms/${selectedRoom._id}/messages`,
+            {
+              headers: {
+                Authorization: localStorage.getItem("authToken"),
+              },
+            }
+          );
+
+          const roomMessages = response.data.messages;
+          setMessages(roomMessages);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
+
+    fetchRoomMessages();
+  }, [selectedRoom]);
   return (
     <div className="flex flex-grow-1 align-items-stretch">
       <Toast ref={toast} />
@@ -82,7 +115,14 @@ function Chat() {
         />
       </div>
 
-      {selectedRoom ? <Messaging selectedRoom={selectedRoom} /> : null}
+      {selectedRoom ? (
+        <Messaging
+          selectedRoom={selectedRoom}
+          socket={socket}
+          messages={messages}
+          decodedToken={decodedToken}
+        />
+      ) : null}
     </div>
   );
 }

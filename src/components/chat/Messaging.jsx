@@ -7,7 +7,38 @@ import EmojiPicker from "./EmojiPicker";
 import TakePhoto from "./TakePhoto";
 //import RecordVoice from "./RecordVoice";
 
-function Messaging({ selectedRoom, ownUserId, messages, setMessages }) {
+function Messaging({
+  selectedRoom,
+  ownUserId,
+  messages,
+  setMessages,
+  socket,
+  decodedToken,
+}) {
+  const [message, setMessage] = useState("");
+
+  const sendTextMessage = () => {
+    socket.emit("send-message", {
+      messageData: {
+        content: message,
+        type: "text",
+      },
+      roomID: selectedRoom._id,
+    });
+  };
+
+  const handleSendMessageKeyDown = (e) => {
+    if (e.key == "Enter") {
+      sendTextMessage();
+      setMessage("");
+    }
+  };
+
+  const handleSendMessageClick = (e) => {
+    sendTextMessage();
+    setMessage("");
+  };
+
   return (
     <div className="flex flex-column ml-5 flex-grow-1 h-screen overflow-y-auto ">
       <div className="flex align-items-center">
@@ -22,11 +53,30 @@ function Messaging({ selectedRoom, ownUserId, messages, setMessages }) {
         <p className="ml-2 text-lg ">{selectedRoom.calculatedRoomName}</p>
       </div>
 
-      <div className="flex-grow-1"></div>
+      <div className="flex-grow-1">
+        {messages.map((message) => (
+          <p
+            key={message._id}
+            className={`text-xl ${
+              message.sender._id == decodedToken.userID ? "text-right" : ""
+            }`}
+          >
+            {message.sender.username}: {message.content}
+          </p>
+        ))}
+      </div>
 
       <div className="flex ">
         <div className="p-inputgroup flex-1">
-          <InputText className="flex-grow-1 w-full"></InputText>
+          <InputText
+            className="flex-grow-1 w-full"
+            onKeyDown={handleSendMessageKeyDown} // Attach the event handler
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            value={message}
+            placeholder="Type your message"
+          ></InputText>
           <EmojiPicker />
           <TakePhoto />
           {/* <RecordVoice />*/}
@@ -36,6 +86,7 @@ function Messaging({ selectedRoom, ownUserId, messages, setMessages }) {
           rounded
           aria-label="Filter"
           className="ml-2 "
+          onClick={handleSendMessageClick}
         />
       </div>
     </div>

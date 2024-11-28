@@ -10,6 +10,8 @@ function RoomList({ rooms, selectedRoom, setSelectedRoom }) {
   return (
     <div className="flex-grow-1 card mt-2 ">
       <ListBox
+        filter
+        filterBy="calculatedRoomName"
         value={selectedRoom}
         onChange={(e) => setSelectedRoom(e.value)}
         filterPlaceholder="Seach in contact list"
