@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import WHISPER_HEADER from "./Header.jsx";
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { Button } from "primereact/button";
+import { Link } from "react-router-dom";
+
+// Resim dosyasını import et
+import WhisperLogo from "./a_chat_application_named__WHISPER__s_logo__slogan_in__CHAT_ONLINE_-removebg-preview.png";
+
 const App = () => {
   const [formData, setFormData] = useState({
-    EMAIL: '',
-    PASSWORD: '',
+    email: "",
+    password: "",
   });
 
-  // Handle input change
+  // State değişikliği yönetimi
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevState) => ({
@@ -16,114 +22,91 @@ const App = () => {
     }));
   };
 
-  // Handle form submission
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    alert(`EMAIL: ${formData.email}, PASSWORD: ${formData.password}`);
-  };
-
-  return ( <div>
-    <WHISPER_HEADER />
-   
-    <div
-   
-    style={{
-      display: 'flex',
-      justifyContent: 'center',    // Horizontally center the form
-      alignItems: 'flex-start',    // Align the form to the top
-      height: '100vh',             // Full viewport height
-      fontFamily: 'Arial, sans-serif',
-      paddingTop: '20px',          // Add some space from the top
-    }}
-  >
-    {/* Full-width background container with orange color */}
+  return (
     <div
       style={{
-        background: '#F44336', // Orange background color
-        width: '100%',         // Make the background stretch across the full width
-        padding: '20px 0',     // Add vertical padding around the form
-        display: 'flex',       // Center the form horizontally
-        justifyContent: 'center',
+        fontFamily: "Arial, sans-serif",
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f5f5f5",
       }}
     >
-      <form
-        onSubmit={handleSubmit}
+      <div
         style={{
-          padding: '24px',
-          borderRadius: '8px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          maxWidth: '300px',   // Fixed width for the form
-          width: '100%',        // Ensure the form width does not exceed the max width
+          width: "300px",
+          padding: "20px",
+          borderRadius: "8px",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#fff",
         }}
       >
+        {/* Logo */}
+        <div style={{ textAlign: "center", marginBottom: "20px" }}>
+          <img
+            src={WhisperLogo}
+            alt="Whisper Logo"
+            style={{ maxWidth: "100%", height: "auto" }}
+          />
+        </div>
+
         {/* EMAIL Field */}
-        <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <label htmlFor="email" style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '4px' }}>
+        <div className="p-field" style={{ marginBottom: "20px" }}>
+          <label htmlFor="email" style={{ fontWeight: "bold", marginBottom: "8px", display: "block" }}>
             EMAIL
           </label>
-          <input
-            type="email"
+          <InputText
             id="email"
             name="email"
             value={formData.email}
             onChange={handleChange}
-            style={{
-              padding: '8px',
-              width: '100%',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
+            placeholder="Enter your email"
+            style={{ width: "100%" }}
           />
         </div>
-  
+
         {/* PASSWORD Field */}
-        <div style={{ marginBottom: '16px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-          <label htmlFor="password" style={{ fontSize: '14px', fontWeight: 'bold', marginBottom: '4px' }}>
+        <div className="p-field" style={{ marginBottom: "20px" }}>
+          <label htmlFor="password" style={{ fontWeight: "bold", marginBottom: "8px", display: "block" }}>
             PASSWORD
           </label>
-          <input
-            type="password"
+          <Password
             id="password"
             name="password"
             value={formData.password}
             onChange={handleChange}
-            style={{
-              padding: '8px',
-              width: '100%',
-              borderRadius: '4px',
-              border: '1px solid #ccc',
-            }}
+            toggleMask
+            feedback={false}
+            placeholder="Enter your password"
+            style={{ width: "100%" }}
           />
         </div>
+
+        {/* Links */}
         <p>
-        Don't have an account? 
-        <Link to="/register" style={{ color: 'blue', textDecoration: 'underline' }}>
-          Register here
-        </Link>
-      </p>
-      <p>
-         
-        <Link to="/forgot" style={{ color: 'blue', textDecoration: 'underline' }}>
-          Forgot My Password
-        </Link>
-      </p>
-        <button
-          type="submit"
-          style={{
-            padding: '10px 16px',
-            backgroundColor: '#0056b3',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            width: '100%',
-          }}
-        >
-          Submit
-        </button>
-      </form>
+          Don't have an account?{" "}
+          <Link to="/register" style={{ color: "blue", textDecoration: "underline" }}>
+            Register here
+          </Link>
+        </p>
+        <p>
+          <Link to="/forgot" style={{ color: "blue", textDecoration: "underline" }}>
+            Forgot My Password
+          </Link>
+        </p>
+
+        {/* Submit Button */}
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            label="Submit"
+            icon="pi pi-check"
+            className="p-button-primary"
+            onClick={() => console.log(formData)}
+          />
+        </div>
+      </div>
     </div>
-  </div></div>
   );
 };
 

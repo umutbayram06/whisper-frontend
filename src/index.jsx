@@ -11,7 +11,7 @@ import React from 'react';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import App from './LoginPage.jsx'; // The home page
-import RegisterPage from './RegisterPage.jsx'; // Your lnogi page component (create this if it doesn't exist)
+import RegisterPage from './RegisterPage.jsx'; 
 import ForgotPage from './ForgotPage.jsx';
 
 // Main routing component to define all routes
