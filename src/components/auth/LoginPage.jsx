@@ -34,7 +34,6 @@ const App = () => {
       localStorage.setItem("authToken", `Bearer ${token}`);
 
       navigate("/");
-      console.log(token);
     } catch (error) {
       console.log(error);
     }

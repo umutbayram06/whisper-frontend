@@ -1,12 +1,17 @@
 import { Badge } from "primereact/badge";
 import React, { useEffect } from "react";
 
-function RoomItem({ option }) {
+function RoomItem({ option, decodedToken }) {
   return (
     <div className="flex flex-column ">
       <div className="flex">
-        <img src="https://placehold.co/50x50" className="border-circle mr-2" />
-        <p className="font-bold flex-grow-1">{option.roomName}</p>
+        <img
+          src={option.roomImage}
+          className="border-circle mr-2"
+          width="56"
+          height="auto"
+        />
+        <p className="font-bold flex-grow-1">{option.calculatedRoomName}</p>
       </div>
     </div>
   );

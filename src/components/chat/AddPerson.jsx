@@ -1,10 +1,9 @@
 import axios from "axios";
 import { Button } from "primereact/button";
-import { FloatLabel } from "primereact/floatlabel";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 
-function AddPerson({ toast }) {
+function AddPerson({ toast, setRooms, decodedToken }) {
   const [username, setUsername] = useState("");
 
   const handleChange = (e) => {
@@ -27,6 +26,18 @@ function AddPerson({ toast }) {
       );
 
       const newRoom = response.data.newRoom;
+      setRooms((prevRooms) => [
+        ...prevRooms,
+        {
+          ...newRoom,
+          calculatedRoomName:
+            newRoom.roomName ||
+            newRoom.participants.find(
+              (participant) => participant._id != decodedToken.userID
+            ).username,
+        },
+      ]);
+
       toast.current.show({
         severity: "success",
         summary: "Room Created",

@@ -8,7 +8,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Chips } from "primereact/chips";
 import axios from "axios";
 
-export default function CreateGroup({ toast }) {
+export default function CreateGroup({ toast, setRooms, decodedToken }) {
   const [visible, setVisible] = useState(false);
   const stepperRef = useRef(null);
 
@@ -30,6 +30,20 @@ export default function CreateGroup({ toast }) {
           },
         }
       );
+
+      const newRoom = response.data.newRoom;
+
+      setRooms((prevRooms) => [
+        ...prevRooms,
+        {
+          ...newRoom,
+          calculatedRoomName:
+            newRoom.roomName ||
+            newRoom.participants.find(
+              (participant) => participant._id != decodedToken.userID
+            ).username,
+        },
+      ]);
 
       toast.current.show({
         severity: "success",

@@ -7,19 +7,19 @@ import EmojiPicker from "./EmojiPicker";
 import TakePhoto from "./TakePhoto";
 //import RecordVoice from "./RecordVoice";
 
-function Messaging({ room, ownUserId, messages, setMessages }) {
+function Messaging({ selectedRoom, ownUserId, messages, setMessages }) {
   return (
     <div className="flex flex-column ml-5 flex-grow-1 h-screen overflow-y-auto ">
       <div className="flex align-items-center">
         <Image
-          src="https://placehold.co/56x56"
+          src={selectedRoom.roomImage}
           alt="Image"
           width="56"
           height="auto"
           preview
           imageClassName="border-circle"
         />
-        <p className="ml-2">abc</p>
+        <p className="ml-2 text-lg ">{selectedRoom.calculatedRoomName}</p>
       </div>
 
       <div className="flex-grow-1"></div>
