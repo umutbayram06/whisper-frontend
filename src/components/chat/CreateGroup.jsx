@@ -8,7 +8,7 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Chips } from "primereact/chips";
 import axios from "axios";
 
-export default function CreateGroup({ toast, setRooms, decodedToken }) {
+export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
   const [visible, setVisible] = useState(false);
   const stepperRef = useRef(null);
 
@@ -44,6 +44,8 @@ export default function CreateGroup({ toast, setRooms, decodedToken }) {
             ).username,
         },
       ]);
+
+      socket.emit("join-specific-room", { roomID: newRoom._id });
 
       toast.current.show({
         severity: "success",

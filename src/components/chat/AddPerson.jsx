@@ -3,7 +3,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 
-function AddPerson({ toast, setRooms, decodedToken }) {
+function AddPerson({ toast, setRooms, decodedToken, socket }) {
   const [username, setUsername] = useState("");
 
   const handleChange = (e) => {
@@ -37,6 +37,8 @@ function AddPerson({ toast, setRooms, decodedToken }) {
             ).username,
         },
       ]);
+
+      socket.emit("join-specific-room", { roomID: newRoom._id });
 
       toast.current.show({
         severity: "success",

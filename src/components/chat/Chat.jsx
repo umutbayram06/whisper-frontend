@@ -99,6 +99,7 @@ function Chat() {
             toast={toast}
             setRooms={setRooms}
             decodedToken={decodedToken}
+            socket={socket}
           />
         </div>
 
@@ -106,6 +107,7 @@ function Chat() {
           toast={toast}
           setRooms={setRooms}
           decodedToken={decodedToken}
+          socket={socket}
         />
         <RoomList
           rooms={rooms}

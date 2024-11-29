@@ -4,7 +4,9 @@ import { Button } from "primereact/button";
 
 import React, { useEffect, useRef, useState } from "react";
 import EmojiPicker from "./EmojiPicker";
-import TakePhoto from "./TakePhoto";
+import MessageItem from "./MessageItem";
+import FileUpload from "../chat/FileUpload";
+
 //import RecordVoice from "./RecordVoice";
 
 function Messaging({
@@ -55,14 +57,11 @@ function Messaging({
 
       <div className="flex-grow-1">
         {messages.map((message) => (
-          <p
+          <MessageItem
             key={message._id}
-            className={`text-xl ${
-              message.sender._id == decodedToken.userID ? "text-right" : ""
-            }`}
-          >
-            {message.sender.username}: {message.content}
-          </p>
+            message={message}
+            decodedToken={decodedToken}
+          />
         ))}
       </div>
 
@@ -78,7 +77,18 @@ function Messaging({
             placeholder="Type your message"
           ></InputText>
           <EmojiPicker />
-          <TakePhoto />
+          <FileUpload
+            icon="pi-camera"
+            socket={socket}
+            type="image"
+            selectedRoom={selectedRoom}
+          />
+          <FileUpload
+            icon="pi-video"
+            socket={socket}
+            type="video"
+            selectedRoom={selectedRoom}
+          />
           {/* <RecordVoice />*/}
         </div>
         <Button
