@@ -60,6 +60,7 @@ export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
   return (
     <div className="card flex justify-content-center w-full">
       <Button
+        icon="pi pi-users"
         label="Create new group"
         className="w-full"
         onClick={() => setVisible(true)}

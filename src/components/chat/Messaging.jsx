@@ -76,7 +76,7 @@ function Messaging({
             value={message}
             placeholder="Type your message"
           ></InputText>
-          <EmojiPicker />
+          <EmojiPicker setMessage={setMessage} />
           <FileUpload
             icon="pi-camera"
             socket={socket}

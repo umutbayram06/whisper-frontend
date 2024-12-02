@@ -13,6 +13,7 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
+import ProfileSettings from "../profileSettings/ProfileSettings";
 
 const token = localStorage.getItem("authToken").split(" ")[1];
 const decodedToken = jwtDecode(token);
@@ -102,7 +103,17 @@ function Chat() {
             socket={socket}
           />
         </div>
-
+        <div className="flex align-items-center my-2 gap-2">
+          <Image
+            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+            alt="Image"
+            width="56"
+            height="auto"
+            preview
+            imageClassName="border-circle"
+          />
+          <ProfileSettings />
+        </div>
         <AddPerson
           toast={toast}
           setRooms={setRooms}
