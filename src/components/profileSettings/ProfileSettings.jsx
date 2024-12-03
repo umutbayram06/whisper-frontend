@@ -19,6 +19,7 @@ function ProfileSettings({ userImageURL, setUserImageURL }) {
         icon="pi pi-user"
       />
       <Dialog
+        dismissableMask
         header="Profile Settings"
         visible={visible}
         style={{ width: "50vw" }}

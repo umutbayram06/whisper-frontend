@@ -47,6 +47,12 @@ function Chat() {
               room.participants.find(
                 (participant) => participant._id != decodedToken.userID
               ).username,
+            calculatedRoomImage:
+              room.roomType == "group"
+                ? room.roomImage
+                : room.participants.find(
+                    (participant) => participant._id != decodedToken.userID
+                  ).profileImage,
           }))
         );
       } catch (error) {

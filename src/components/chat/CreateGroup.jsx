@@ -66,6 +66,7 @@ export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
         onClick={() => setVisible(true)}
       />
       <Dialog
+        dismissableMask
         modal
         style={{ width: "50rem" }}
         visible={visible}

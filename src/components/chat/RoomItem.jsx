@@ -6,7 +6,7 @@ function RoomItem({ option, decodedToken }) {
     <div className="flex flex-column ">
       <div className="flex">
         <img
-          src={option.roomImage}
+          src={`http://localhost:5000/uploads/${option.calculatedRoomImage}`}
           className="border-circle mr-2"
           width="56"
           height="auto"

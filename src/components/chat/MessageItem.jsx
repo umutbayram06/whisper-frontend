@@ -6,12 +6,12 @@ function MessageItem({ message, decodedToken }) {
   switch (message.type) {
     case "text":
       finalMessageJSX = (
-        <div className="flex justify-content-end mt-2">
-          <p
-            className={`text-xl ${
-              message.sender._id == decodedToken.userID ? "text-right" : ""
-            }`}
-          >
+        <div
+          className={`flex mt-2 justify-content-${
+            message.sender._id == decodedToken.userID ? "end" : "start"
+          } mt-2`}
+        >
+          <p className="text-xl">
             {message.sender.username}: {message.content}
           </p>
         </div>
@@ -19,7 +19,11 @@ function MessageItem({ message, decodedToken }) {
       break;
     case "image":
       finalMessageJSX = (
-        <div className="flex justify-content-end mt-2">
+        <div
+          className={`flex justify-content-${
+            message.sender._id == decodedToken.userID ? "end" : "start"
+          } mt-2`}
+        >
           <Image src={message.content} alt="Image" width="250" preview />
         </div>
       );

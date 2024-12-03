@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputSwitch } from "primereact/inputswitch";
+import axios from "axios";
 
 export default function Privacy() {
   const [visible, setVisible] = useState(false);
@@ -9,12 +10,42 @@ export default function Privacy() {
   const [aboutSwitch, setAboutSwitch] = useState(false);
   const [profileImageSwitch, setProfileImageSwitch] = useState(false);
 
+  useEffect(() => {
+    const getPrivacySettings = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/profile/privacySettings",
+          { headers: { Authorization: localStorage.getItem("authToken") } }
+        );
+        const { privacySettings } = response.data;
+        setAboutSwitch(privacySettings.showAboutSection);
+        setProfileImageSwitch(privacySettings.showProfileImage);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getPrivacySettings();
+  }, []);
+
   const headerElement = (
     <div className="inline-flex align-items-center justify-content-center gap-2">
       <i className="pi pi-eye-slash"></i>
       <span className="font-bold white-space-nowrap">Privacy Settings</span>
     </div>
   );
+
+  const sendPrivacySettings = async (showAboutSection, showProfileImage) => {
+    try {
+      await axios.put(
+        "http://localhost:5000/profile/privacySettings",
+        { showAboutSection, showProfileImage },
+        { headers: { Authorization: localStorage.getItem("authToken") } }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="card flex justify-content-center mt-2">
@@ -45,6 +76,7 @@ export default function Privacy() {
             checked={aboutSwitch}
             onChange={(e) => {
               setAboutSwitch(e.value);
+              sendPrivacySettings(e.value, profileImageSwitch);
             }}
           />
         </div>
@@ -55,6 +87,7 @@ export default function Privacy() {
             checked={profileImageSwitch}
             onChange={(e) => {
               setProfileImageSwitch(e.value);
+              sendPrivacySettings(aboutSwitch, e.value);
             }}
           />
         </div>

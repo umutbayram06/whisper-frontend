@@ -6,6 +6,7 @@ import React, { useEffect, useRef, useState } from "react";
 import EmojiPicker from "./EmojiPicker";
 import MessageItem from "./MessageItem";
 import FileUpload from "../chat/FileUpload";
+import RoomDetails from "./RoomDetails";
 
 //import RecordVoice from "./RecordVoice";
 
@@ -45,7 +46,7 @@ function Messaging({
     <div className="flex flex-column ml-5 flex-grow-1 h-screen overflow-y-auto ">
       <div className="flex align-items-center">
         <Image
-          src={selectedRoom.roomImage}
+          src={`http://localhost:5000/uploads/${selectedRoom.calculatedRoomImage}`}
           alt="Image"
           width="56"
           height="auto"
@@ -57,7 +58,10 @@ function Messaging({
             },
           }}
         />
-        <p className="ml-2 text-lg ">{selectedRoom.calculatedRoomName}</p>
+        <p className="ml-2 text-lg flex-grow-1">
+          {selectedRoom.calculatedRoomName}
+        </p>
+        <RoomDetails selectedRoom={selectedRoom} />
       </div>
 
       <div className="flex-grow-1">
