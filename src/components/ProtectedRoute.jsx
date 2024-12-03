@@ -3,7 +3,6 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   const authToken = localStorage.getItem("authToken");
-  console.log(authToken);
   return authToken ? children : <Navigate to="/" />;
 };
 

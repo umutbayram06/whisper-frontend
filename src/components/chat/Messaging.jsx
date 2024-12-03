@@ -51,6 +51,11 @@ function Messaging({
           height="auto"
           preview
           imageClassName="border-circle"
+          pt={{
+            button: {
+              className: "border-circle",
+            },
+          }}
         />
         <p className="ml-2 text-lg ">{selectedRoom.calculatedRoomName}</p>
       </div>

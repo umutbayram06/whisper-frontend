@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProfileImageUpload from "./ProfileImageUpload";
+import axios from "axios";
+import { Image } from "primereact/image";
 
-function ProfileImage() {
+function ProfileImage({ userImageURL, setUserImageURL }) {
   return (
     <div className="flex flex-column align-items-center mt-6 gap-3">
-      <img
-        src="https://placehold.co/200x200"
+      <Image
+        src={userImageURL}
+        alt="Image"
         width="200px"
-        height="200px"
-        className="border-circle no-text-selection"
-      ></img>
-      <ProfileImageUpload />
+        height="auto"
+        preview
+        imageClassName="border-circle"
+        pt={{
+          button: {
+            className: "border-circle",
+          },
+        }}
+      />
+
+      <ProfileImageUpload setUserImageURL={setUserImageURL} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ import About from "./partials/About";
 import Privacy from "./partials/Privacy";
 import Security from "./partials/Security";
 
-function ProfileSettings() {
+function ProfileSettings({ userImageURL, setUserImageURL }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -30,7 +30,10 @@ function ProfileSettings() {
         className="flex"
         contentClassName="flex flex-column justify-content-center"
       >
-        <ProfileImage />
+        <ProfileImage
+          userImageURL={userImageURL}
+          setUserImageURL={setUserImageURL}
+        />
         <About />
         <Privacy />
         <Security />

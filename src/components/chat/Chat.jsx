@@ -14,9 +14,8 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 import ProfileSettings from "../profileSettings/ProfileSettings";
-
-const token = localStorage.getItem("authToken").split(" ")[1];
-const decodedToken = jwtDecode(token);
+import Logout from "../auth/Logout";
+import { useLocation } from "react-router-dom";
 
 function Chat() {
   const [rooms, setRooms] = useState([]);
@@ -24,6 +23,12 @@ function Chat() {
   const [messages, setMessages] = useState([]);
   const toast = useRef(null);
   const [socket, setSocket] = useState(null);
+  const [userImageURL, setUserImageURL] = useState(
+    "http://localhost:5000/uploads/defaultUserImage.png"
+  );
+
+  const token = localStorage.getItem("authToken")?.split(" ")[1];
+  const decodedToken = jwtDecode(token);
 
   useEffect(() => {
     const getUserRooms = async function () {
@@ -48,7 +53,24 @@ function Chat() {
         console.log(error);
       }
     };
+    const getUserImage = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/profile/image",
+          {
+            headers: { Authorization: localStorage.getItem("authToken") },
+          }
+        );
+
+        const { profileImage } = response.data;
+        setUserImageURL(`http://localhost:5000/uploads/${profileImage}`);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getUserRooms();
+    getUserImage();
 
     const socket = io("http://localhost:5000", {
       extraHeaders: {
@@ -91,10 +113,30 @@ function Chat() {
 
     fetchRoomMessages();
   }, [selectedRoom]);
+
   return (
     <div className="flex flex-grow-1 align-items-stretch">
       <Toast ref={toast} />
       <div className="flex flex-column">
+        <div className="flex align-items-center my-2 gap-2">
+          <Image
+            src={userImageURL}
+            alt="Image"
+            width="56"
+            height="auto"
+            preview
+            imageClassName="border-circle"
+            pt={{
+              button: {
+                className: "border-circle",
+              },
+            }}
+          />
+          <ProfileSettings
+            userImageURL={userImageURL}
+            setUserImageURL={setUserImageURL}
+          />
+        </div>
         <div className="w-full">
           <CreateGroup
             toast={toast}
@@ -103,17 +145,7 @@ function Chat() {
             socket={socket}
           />
         </div>
-        <div className="flex align-items-center my-2 gap-2">
-          <Image
-            src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
-            alt="Image"
-            width="56"
-            height="auto"
-            preview
-            imageClassName="border-circle"
-          />
-          <ProfileSettings />
-        </div>
+
         <AddPerson
           toast={toast}
           setRooms={setRooms}
@@ -126,6 +158,7 @@ function Chat() {
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
         />
+        <Logout />
       </div>
 
       {selectedRoom ? (

@@ -4,7 +4,6 @@ import { Button } from "primereact/button";
 
 const FileUpload = ({ icon, socket, type, selectedRoom }) => {
   const fileInputRef = useRef(null);
-  const [uploading, setUploading] = useState(false);
 
   const handleFileSelect = async (event) => {
     const file = event.target.files[0];
@@ -14,7 +13,6 @@ const FileUpload = ({ icon, socket, type, selectedRoom }) => {
   };
 
   const sendFile = async (file) => {
-    setUploading(true);
     try {
       const formData = new FormData();
       formData.append("file", file);
@@ -23,7 +21,10 @@ const FileUpload = ({ icon, socket, type, selectedRoom }) => {
         "http://localhost:5000/fileUpload",
         formData,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: localStorage.getItem("authToken"),
+          },
         }
       );
 
@@ -41,8 +42,6 @@ const FileUpload = ({ icon, socket, type, selectedRoom }) => {
       });
     } catch (error) {
       console.error("Upload Failed", error);
-    } finally {
-      setUploading(false);
     }
   };
 
@@ -64,9 +63,6 @@ const FileUpload = ({ icon, socket, type, selectedRoom }) => {
         onChange={handleFileSelect}
         accept="image/*,video/*"
       />
-
-      {/* Upload Status */}
-      {uploading && <p>Uploading...</p>}
     </div>
   );
 };

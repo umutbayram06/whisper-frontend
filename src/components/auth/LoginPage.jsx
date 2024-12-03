@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Header from "../Header.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
@@ -6,13 +6,14 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import { Password } from "primereact/password";
 import axios from "axios";
+import { Toast } from "primereact/toast";
 
-const App = () => {
+const LoginPage = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
-
+  const toast = useRef(null);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -33,14 +34,28 @@ const App = () => {
       const { token } = response.data;
       localStorage.setItem("authToken", `Bearer ${token}`);
 
-      navigate("/");
+      navigate("/chat");
     } catch (error) {
+      toast.current.show({
+        severity: "error",
+        summary: error.response.data.message,
+        detail: "Try Again !",
+        life: 3000,
+      });
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      navigate("/chat");
+    }
+  }, [navigate]);
+
   return (
     <div>
+      <Toast ref={toast} />
       <Header />
 
       <div className="register-page flex justify-content-center">
@@ -99,4 +114,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default LoginPage;

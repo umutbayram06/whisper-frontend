@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useRef } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import App from "./components/auth/LoginPage.jsx";
+import LoginPage from "./components/auth/LoginPage.jsx";
 import RegisterPage from "./components/auth/RegisterPage.jsx";
 import ForgotPasswordPage from "./components/auth/ForgotPasswordPage.jsx";
 import Chat from "./components/chat/Chat.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import { Toast } from "primereact/toast";
 
-// Main routing component to define all routes
-const Main = () => {
+const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<App />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />{" "}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />{" "}
         <Route
@@ -27,4 +27,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default App;
