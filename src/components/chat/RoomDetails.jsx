@@ -43,7 +43,7 @@ function RoomDetails({ selectedRoom }) {
         <div>
           <h3>Participants</h3>
           {selectedRoom.participants.map((participant) => (
-            <UserDetails user={participant} />
+            <UserDetails key={participant._id} user={participant} />
           ))}
         </div>
       </Dialog>
