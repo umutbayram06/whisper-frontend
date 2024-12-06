@@ -6,9 +6,11 @@ import App from "./index.jsx";
 import "primereact/resources/primereact.min.css"; // Core PrimeReact CSS
 import "primeicons/primeicons.css"; // PrimeIcons
 import "primeflex/primeflex.css"; // PrimeFlex (optional)
-import "primereact/resources/themes/tailwind-light/theme.css";
+//import "primereact/resources/themes/tailwind-light/theme.css";
 
 // Main routing component to define all routes
+
+import "./index.css";
 
 const root = createRoot(document.getElementById("root"));
 

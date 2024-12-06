@@ -40,6 +40,7 @@ export default function Security() {
           if (!visible) return;
           setVisible(false);
         }}
+        dismissableMask
       >
         <div className="card">
           <TabView>

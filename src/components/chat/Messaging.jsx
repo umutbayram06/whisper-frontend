@@ -12,11 +12,11 @@ import RoomDetails from "./RoomDetails";
 
 function Messaging({
   selectedRoom,
-  ownUserId,
   messages,
-  setMessages,
   socket,
   decodedToken,
+  setRooms,
+  setSelectedRoom,
 }) {
   const [message, setMessage] = useState("");
 
@@ -43,7 +43,7 @@ function Messaging({
   };
 
   return (
-    <div className="flex flex-column ml-5 flex-grow-1 h-screen overflow-y-auto ">
+    <div className="flex flex-column ml-5 flex-grow-1 ">
       <div className="flex align-items-center">
         <Image
           src={`http://localhost:5000/uploads/${selectedRoom.calculatedRoomImage}`}
@@ -61,7 +61,11 @@ function Messaging({
         <p className="ml-2 text-lg flex-grow-1">
           {selectedRoom.calculatedRoomName}
         </p>
-        <RoomDetails selectedRoom={selectedRoom} />
+        <RoomDetails
+          selectedRoom={selectedRoom}
+          setSelectedRoom={setSelectedRoom}
+          setRooms={setRooms}
+        />
       </div>
 
       <div className="flex-grow-1">
@@ -76,6 +80,7 @@ function Messaging({
 
       <div className="flex ">
         <div className="p-inputgroup flex-1">
+          <EmojiPicker setMessage={setMessage} />
           <InputText
             className="flex-grow-1 w-full"
             onKeyDown={handleSendMessageKeyDown} // Attach the event handler
@@ -85,7 +90,7 @@ function Messaging({
             value={message}
             placeholder="Type your message"
           ></InputText>
-          <EmojiPicker setMessage={setMessage} />
+
           <FileUpload
             icon="pi-camera"
             socket={socket}

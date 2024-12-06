@@ -3,8 +3,9 @@ import { Dialog } from "primereact/dialog";
 import { Image } from "primereact/image";
 import React, { useState } from "react";
 import UserDetails from "./UserDetails";
+import GroupRoomImageUpload from "./GroupRoomImageUpload";
 
-function RoomDetails({ selectedRoom }) {
+function RoomDetails({ selectedRoom, setRooms, setSelectedRoom }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -39,6 +40,13 @@ function RoomDetails({ selectedRoom }) {
               },
             }}
           />
+          {selectedRoom.roomType == "group" ? (
+            <GroupRoomImageUpload
+              selectedRoom={selectedRoom}
+              setRooms={setRooms}
+              setSelectedRoom={setSelectedRoom}
+            />
+          ) : null}
         </div>
         <div>
           <h3>Participants</h3>

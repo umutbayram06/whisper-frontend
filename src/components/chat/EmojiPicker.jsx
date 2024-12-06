@@ -7,14 +7,13 @@ import Picker from "@emoji-mart/react";
 
 function EmojiPicker({ setMessage }) {
   const emojiPanel = useRef(null);
-  const emojiDivRef = useRef(null);
 
   const handleEmojiSelect = (emoji) => {
     setMessage((prevMessage) => prevMessage + emoji.native);
   };
 
   return (
-    <div className="card flex justify-content-center" ref={emojiDivRef}>
+    <div className="card flex justify-content-center">
       <Button
         icon="pi pi-face-smile"
         rounded
@@ -24,8 +23,7 @@ function EmojiPicker({ setMessage }) {
       />
       <OverlayPanel
         ref={emojiPanel}
-        appendTo={emojiDivRef.current}
-        className="custom-emoji-panel"
+        className="custom-emoji-panel custom-overlay"
         unstyled
       >
         <Picker

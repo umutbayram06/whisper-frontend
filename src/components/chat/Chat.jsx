@@ -16,13 +16,20 @@ import { jwtDecode } from "jwt-decode";
 import ProfileSettings from "../profileSettings/ProfileSettings";
 import Logout from "../auth/Logout";
 import { useLocation } from "react-router-dom";
+import ThemeSwitcher from "../app/ThemeSwitcher";
+import AppSettings from "../app/AppSettings";
+import themes from "../../assets/themes.js";
 
 function Chat() {
+  const [currentTheme, setCurrentTheme] = useState(
+    themes[localStorage.getItem("themeIndex") || 12]
+  );
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [messages, setMessages] = useState([]);
   const toast = useRef(null);
   const [socket, setSocket] = useState(null);
+  const [username, setUsername] = useState("");
   const [userImageURL, setUserImageURL] = useState(
     "http://localhost:5000/uploads/defaultUserImage.png"
   );
@@ -75,8 +82,25 @@ function Chat() {
       }
     };
 
+    const getUsername = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/profile/username",
+          {
+            headers: { Authorization: localStorage.getItem("authToken") },
+          }
+        );
+
+        const { username } = response.data;
+        setUsername(username);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     getUserRooms();
     getUserImage();
+    getUsername();
 
     const socket = io("http://localhost:5000", {
       extraHeaders: {
@@ -120,8 +144,15 @@ function Chat() {
     fetchRoomMessages();
   }, [selectedRoom]);
 
+  useEffect(() => {
+    const themeLink = document.getElementById("theme-link");
+    if (themeLink) {
+      themeLink.href = currentTheme.path;
+    }
+  }, [currentTheme]);
+
   return (
-    <div className="flex flex-grow-1 align-items-stretch">
+    <div className="flex flex-grow-1 p-2">
       <Toast ref={toast} />
       <div className="flex flex-column">
         <div className="flex align-items-center my-2 gap-2">
@@ -141,6 +172,7 @@ function Chat() {
           <ProfileSettings
             userImageURL={userImageURL}
             setUserImageURL={setUserImageURL}
+            username={username}
           />
         </div>
         <div className="w-full">
@@ -164,7 +196,14 @@ function Chat() {
           selectedRoom={selectedRoom}
           setSelectedRoom={setSelectedRoom}
         />
-        <Logout />
+        <div className="flex align-items-center gap-2 mt-2">
+          <AppSettings
+            setCurrentTheme={setCurrentTheme}
+            currentTheme={currentTheme}
+            themes={themes}
+          />
+          <Logout />
+        </div>
       </div>
 
       {selectedRoom ? (
@@ -173,6 +212,8 @@ function Chat() {
           socket={socket}
           messages={messages}
           decodedToken={decodedToken}
+          setRooms={setRooms}
+          setSelectedRoom={setSelectedRoom}
         />
       ) : null}
     </div>

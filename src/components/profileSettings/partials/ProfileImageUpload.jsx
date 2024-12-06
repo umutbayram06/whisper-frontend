@@ -33,9 +33,8 @@ export default function ProfileImageUpload({ setUserImageURL }) {
 
       const filename = response.data.filename;
       const fileURL = `http://localhost:5000/uploads/${filename}`;
-      console.log(fileURL);
+
       setUserImageURL(fileURL);
-      console.log("Upload Successful", response.data);
     } catch (error) {
       console.error("Upload Failed", error);
     }
@@ -59,7 +58,7 @@ export default function ProfileImageUpload({ setUserImageURL }) {
           ref={fileInputRef}
           style={{ display: "none" }}
           onChange={handleFileSelect}
-          accept="image/*,video/*"
+          accept="image/*"
         />
       </div>
     </div>
