@@ -5,6 +5,7 @@ import { ThemeProvider } from './ThemeContext';  // ThemeContext'i import et
 import App from './LoginPage';
 import RegisterPage from './RegisterPage';
 import ForgotPage from './ForgotPage';
+import ChangePassword from './ChangePassword';
 
 // Main routing component
 const Main = () => {
@@ -15,6 +16,7 @@ const Main = () => {
           <Route path="/" element={<App />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/forgot" element={<ForgotPage />} />
+          <Route path="/renew" element={<ChangePassword />} />
         </Routes>
       </Router>
     </ThemeProvider>

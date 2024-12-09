@@ -1,0 +1,87 @@
+/* Genel Temalar */
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+}
+
+/* Dark Mode */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.light-mode {
+  background-color: #f5f5f5;
+  color: #000000;
+}
+
+/* Form Alanları */
+.form-container {
+  width: 300px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .form-container {
+  background-color: #1e1e1e;
+}
+
+body.light-mode .form-container {
+  background-color: #ffffff;
+}
+
+/* Input Alanları */
+.input-field {
+  width: 100%;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #cccccc;
+}
+
+body.dark-mode .input-field {
+  background-color: #333333;
+  color: #ffffff;
+  border-color: #555555;
+}
+
+body.light-mode .input-field {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* Butonlar */
+.primary-button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+body.dark-mode .primary-button {
+  background-color: #4caf50;
+  color: #ffffff;
+}
+
+body.light-mode .primary-button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+/* Linkler */
+a {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+body.dark-mode a {
+  color: #4caf50;
+}
+
+body.light-mode a {
+  color: blue;
+}
+

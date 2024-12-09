@@ -3,7 +3,8 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import { useTheme } from "./ThemeContext"; // ThemeContext'i kullanmak için import ettik
+import { useTheme } from "./ThemeContext"; // Tema kontrolü için useTheme hook'u
+import "./darkmode.css";
 
 // Logo ve görseller
 import WhisperLogo from "./a_chat_application_named__WHISPER__s_logo__slogan_in__CHAT_ONLINE_-removebg-preview.png";
@@ -32,7 +33,6 @@ const App = () => {
   const handleSubmit = (e) => {
     e.preventDefault(); // Sayfanın yenilenmesini engeller
     console.log("Form Data Submitted:", formData); // Form verilerini konsola yazdırır
-    // Burada form verilerini sunucuya gönderme veya başka işlemler yapılabilir
   };
 
   return (
@@ -118,7 +118,7 @@ const App = () => {
             style={{
               maxWidth: "100%",
               height: "auto",
-              filter: darkMode ? "invert(1)" : "none", // Koyu modda logo rengini tersine çevir
+              filter: darkMode ? "invert(1)" : "none",
             }}
           />
         </div>
@@ -144,8 +144,8 @@ const App = () => {
             style={{
               width: "100%",
               backgroundColor: darkMode ? "#333333" : "#ffffff", // Input arka planı
-              color: darkMode ? "#ffffff" : "#000000",
-              borderColor: darkMode ? "#555555" : "#cccccc",
+              color: darkMode ? "#ffffff" : "#000000", // Input metin rengi
+              borderColor: darkMode ? "#555555" : "#cccccc", // Input kenarlık rengi
             }}
           />
         </div>
@@ -172,9 +172,9 @@ const App = () => {
             placeholder="Enter your password"
             style={{
               width: "100%",
-              backgroundColor: darkMode ? "#333333" : "#ffffff", // Input arka planı
-              color: darkMode ? "#ffffff" : "#000000",
-              borderColor: darkMode ? "#555555" : "#cccccc",
+              backgroundColor: darkMode ? "#000000" : "#ffffff", // Dark mode için siyah arka plan
+              color: darkMode ? "#ffffff" : "#000000", // Dark mode için yazı rengi
+              borderColor: darkMode ? "#555555" : "#cccccc", // Dark mode için kenarlık
             }}
           />
         </div>
@@ -211,10 +211,10 @@ const App = () => {
             icon="pi pi-check"
             className="p-button-primary"
             style={{
-              backgroundColor: darkMode ? "#4caf50" : "#007bff", // Buton arka planı
+              backgroundColor: darkMode ? "#4caf50" : "#007bff", // Dark mode için buton rengi
               color: "#ffffff",
             }}
-            onClick={handleSubmit} // Formu göndermek için handleSubmit fonksiyonu
+            onClick={handleSubmit}
           />
         </div>
       </div>
