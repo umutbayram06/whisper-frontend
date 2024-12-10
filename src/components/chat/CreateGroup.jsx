@@ -42,6 +42,12 @@ export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
             newRoom.participants.find(
               (participant) => participant._id != decodedToken.userID
             ).username,
+          calculatedRoomImage:
+            newRoom.roomType == "group"
+              ? newRoom.roomImage
+              : newRoom.participants.find(
+                  (participant) => participant._id != decodedToken.userID
+                ).profileImage,
         },
       ]);
 

@@ -26,6 +26,7 @@ function AddPerson({ toast, setRooms, decodedToken, socket }) {
       );
 
       const newRoom = response.data.newRoom;
+      console.log(newRoom);
       setRooms((prevRooms) => [
         ...prevRooms,
         {
