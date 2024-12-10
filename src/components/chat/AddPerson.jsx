@@ -52,7 +52,11 @@ function AddPerson({ toast, setRooms, decodedToken, socket }) {
         life: 3000,
       });
     } catch (error) {
-      console.log(error);
+      toast.current.show({
+        severity: "error",
+        summary: error.response.data.message,
+        life: 3000,
+      });
     }
   };
 

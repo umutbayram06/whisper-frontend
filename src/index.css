@@ -12,3 +12,18 @@ html, body, #root {
     transform: translateY(-100%) translateX(-100%); /* Moves it upwards */
     margin-bottom: 10px; /* Optional spacing between trigger and overlay */
 }
+
+
+.scrollpanel-demo .p-scrollpanel.custombar1 .p-scrollpanel-wrapper {
+  border-right: 10px solid var(--surface-ground);
+}
+
+.scrollpanel-demo .p-scrollpanel.custombar1 .p-scrollpanel-bar {
+  background-color: var(--primary-300);
+  opacity: 1;
+  transition: background-color .3s;
+}
+
+.scrollpanel-demo .p-scrollpanel.custombar1 .p-scrollpanel-bar:hover {
+  background-color: var(--primary-400);
+}

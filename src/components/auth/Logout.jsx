@@ -11,7 +11,12 @@ function Logout() {
   };
 
   return (
-    <Button label="Logout" onClick={handleClick} className="w-full"></Button>
+    <Button
+      icon="pi pi-sign-out"
+      label="Logout"
+      onClick={handleClick}
+      className="w-full"
+    ></Button>
   );
 }
 

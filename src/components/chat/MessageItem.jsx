@@ -24,13 +24,19 @@ function MessageItem({ message, decodedToken }) {
             message.sender._id == decodedToken.userID ? "end" : "start"
           } mt-2`}
         >
+          <p className="text-xl">{message.sender.username}: </p>
           <Image src={message.content} alt="Image" width="250" preview />
         </div>
       );
       break;
     case "video":
       finalMessageJSX = (
-        <div className="flex justify-content-end mt-2">
+        <div
+          className={`flex justify-content-${
+            message.sender._id == decodedToken.userID ? "end" : "start"
+          } mt-2`}
+        >
+          <p className="text-xl">{message.sender.username}: </p>
           <video width="350" height="auto" controls>
             <source src={message.content} type="video/mp4" />
           </video>

@@ -19,6 +19,7 @@ function Messaging({
   setSelectedRoom,
 }) {
   const [message, setMessage] = useState("");
+  const messagesEndRef = useRef(null);
 
   const sendTextMessage = () => {
     socket.emit("send-message", {
@@ -41,6 +42,12 @@ function Messaging({
     sendTextMessage();
     setMessage("");
   };
+
+  useEffect(() => {
+    if (messages[messages.length - 1]?.sender._id == decodedToken.userID) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
 
   return (
     <div className="flex flex-column ml-5 flex-grow-1 ">
@@ -68,7 +75,7 @@ function Messaging({
         />
       </div>
 
-      <div className="flex-grow-1">
+      <div className="flex-grow-1 overflow-y-auto max-h-full px-5">
         {messages.map((message) => (
           <MessageItem
             key={message._id}
@@ -76,14 +83,15 @@ function Messaging({
             decodedToken={decodedToken}
           />
         ))}
+        <div ref={messagesEndRef}></div>
       </div>
 
-      <div className="flex ">
+      <div className="flex mt-2">
         <div className="p-inputgroup flex-1">
           <EmojiPicker setMessage={setMessage} />
           <InputText
             className="flex-grow-1 w-full"
-            onKeyDown={handleSendMessageKeyDown} // Attach the event handler
+            onKeyDown={handleSendMessageKeyDown}
             onChange={(e) => {
               setMessage(e.target.value);
             }}

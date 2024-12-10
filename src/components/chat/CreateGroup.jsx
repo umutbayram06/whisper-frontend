@@ -54,7 +54,11 @@ export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
       });
       setVisible(false);
     } catch (error) {
-      console.log(error);
+      toast.current.show({
+        severity: "error",
+        summary: error.response.data.message,
+        life: 3000,
+      });
     }
   };
   return (

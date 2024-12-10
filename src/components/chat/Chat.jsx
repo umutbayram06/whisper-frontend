@@ -152,7 +152,7 @@ function Chat() {
   }, [currentTheme]);
 
   return (
-    <div className="flex flex-grow-1 p-2">
+    <div className="flex flex-grow-1 p-2 max-h-screen">
       <Toast ref={toast} />
       <div className="flex flex-column">
         <div className="flex align-items-center my-2 gap-2">
