@@ -1,5 +1,5 @@
-# whisper frontend
+# Whisper Client
 
-# setup <br>
+# Setup <br>
 Do not forget to setup the mongodb first <br>
 Run command "npm install" then "npm run dev"
