@@ -109,16 +109,54 @@ function Chat() {
     });
     setSocket(socket);
 
-    const onReceiveMessage = ({ message: newMessage }) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    const onAddedToRoom = async ({ roomID }) => {
+      getUserRooms();
+      socket.emit("join-specific-room", { roomID });
     };
 
-    socket.on("receive-message", onReceiveMessage);
+    socket.on("added-to-room", onAddedToRoom);
 
     return () => {
       socket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    const onReceiveMessage = ({ message: newMessage, roomID }) => {
+      if (selectedRoom?._id == roomID) {
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      } else {
+        setRooms((prevRooms) => {
+          return prevRooms.map((room) => {
+            if (room._id == roomID) {
+              return {
+                ...room,
+                calculatedRoomNotificationMessage: newMessage.content,
+              };
+            }
+
+            return room;
+          });
+        });
+      }
+    };
+
+    socket?.on("receive-message", onReceiveMessage);
+
+    setRooms((prevRooms) => {
+      return prevRooms.map((room) => {
+        if (room._id == selectedRoom?._id) {
+          return { ...room, calculatedRoomNotificationMessage: null };
+        } else {
+          return room;
+        }
+      });
+    });
+
+    return () => {
+      socket?.off("receive-message", onReceiveMessage);
+    };
+  }, [selectedRoom]);
 
   useEffect(() => {
     const fetchRoomMessages = async () => {

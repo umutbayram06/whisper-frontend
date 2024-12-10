@@ -25,7 +25,7 @@ export default function Security() {
         onClick={() => {
           setVisible(true);
         }}
-        tooltip="Change your password or email"
+        tooltip="Change your password or username"
       >
         <i className="pi pi-shield mr-2"></i>
         Security

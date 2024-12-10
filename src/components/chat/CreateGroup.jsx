@@ -52,6 +52,10 @@ export default function CreateGroup({ toast, setRooms, decodedToken, socket }) {
       ]);
 
       socket.emit("join-specific-room", { roomID: newRoom._id });
+      socket.emit("add-participants-to-room", {
+        usernames: participantUsernames,
+        roomID: newRoom._id,
+      });
 
       toast.current.show({
         severity: "success",
