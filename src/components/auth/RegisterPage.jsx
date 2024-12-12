@@ -5,8 +5,9 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import Header from "../Header";
 import axios from "axios";
-import { Toast } from "primereact/toast";
 import { useNavigate } from "react-router-dom";
+import { Toast } from 'primereact/toast';
+        
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
@@ -41,11 +42,13 @@ const RegisterPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
+      toast.current.show({ severity: 'Error', summary: 'Error', detail: "Failed to register user. Please try again" });
     }
   };
 
   return (
     <div>
+      <Toast severity="Error" className="Error" ref={toast} />
       <Header />
 
       <div className="register-page flex justify-content-center">
@@ -99,6 +102,7 @@ const RegisterPage = () => {
               className="p-button-rounded mt-3 "
               onClick={handleSubmit}
             />
+            
           </div>
         </Card>
       </div>
