@@ -42,13 +42,13 @@ const RegisterPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.current.show({ severity: 'Error', summary: 'Error', detail: "Failed to register user. Please try again" });
+      toast.current.show({ severity: 'error', summary: 'Error', detail: "Failed to register user. Please try again" });
     }
   };
 
   return (
     <div>
-      <Toast severity="Error" className="Error" ref={toast} />
+      <Toast  ref={toast} />
       <Header />
 
       <div className="register-page flex justify-content-center">
