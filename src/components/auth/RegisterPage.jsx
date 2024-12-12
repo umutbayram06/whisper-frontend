@@ -42,7 +42,12 @@ const RegisterPage = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.current.show({ severity: 'error', summary: 'Error', detail: "Failed to register user. Please try again" });
+      toast.current.show({
+        severity: "error",
+        summary: error.response.data.message,
+        detail: "Try Again !",
+        life: 3000,
+      });
     }
   };
 
